@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class Goods {
     private int type;
 
     @ApiModelProperty(required = true)
-    private float rentalCost;
+    private BigDecimal rentalCost;
 
     @ApiModelProperty(required = true)
-    private float deposit;
+    private BigDecimal deposit;
 
     private String desc;
 

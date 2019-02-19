@@ -3,10 +3,7 @@ package com.classm.dao.mapper;
 
 import com.classm.bean.User;
 import com.classm.bean.UserBasic;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -45,4 +42,11 @@ public interface UserMapper {
             @Result(column = "last_name", property = "lastName")
     })
     List<UserBasic> findUsersByIds(@Param("ids") List<Integer> userByGoodsId);
+
+    @Insert("INSERT INTO `t_user` (`type`, `phone`, `email`, `gender`, `first_name`, `last_name`, `birth`, `notify`, `pwd`) " +
+            "VALUES (#{user.type}, #{user.phone}, #{user.email}, #{user.gender}, #{user.firstName}, #{user.lastName}, #{user.birth}, #{user.notify}, #{user.pwd});")
+    int save(@Param("user") User user);
+
+
+
 }
