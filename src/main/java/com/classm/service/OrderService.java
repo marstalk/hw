@@ -30,7 +30,6 @@ public class OrderService {
         order.setDailyFee(goods.getRentalCost());
         order.setOrderId("hw-" + System.currentTimeMillis() + "-" +UUID.randomUUID().toString().substring(0, 8));
 
-        //TODO service fee
         order.setServiceFee(BigDecimal.ZERO);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
