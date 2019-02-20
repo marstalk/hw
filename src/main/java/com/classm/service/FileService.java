@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.UUID;
 
@@ -16,7 +17,8 @@ public class FileService {
     private String filePath;
 
 
-    public String saveFile(MultipartFile file) {
+    public String saveFile(MultipartFile file, HttpServletRequest request) {
+
         InputStream inputStream = null;
         OutputStream outputStream = null;
         String newFilePath = filePath + File.separator + UUID.randomUUID().toString();

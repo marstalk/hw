@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.classm.bean.ResponseHelper;
 import com.classm.bean.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,11 +18,13 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
+    @Value("auth.switch")
+    private String on;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        if (request.getRequestURI().startsWith("/security")) {
+        if (request.getRequestURI().startsWith("/hw/security") && "1".equals(on)) {
             User login = (User) request.getSession().getAttribute("user");
 
             if (null == login) {

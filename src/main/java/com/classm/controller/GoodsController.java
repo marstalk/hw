@@ -6,6 +6,8 @@ import com.classm.bean.resp.QueryGoodsByIdResp;
 import com.classm.service.FileService;
 import com.classm.service.GoodsService;
 import com.classm.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping()
-public class GoodsController extends BaseController{
+public class GoodsController extends BaseController {
     @Autowired
     private GoodsService goodsService;
     @Autowired
@@ -35,14 +37,18 @@ public class GoodsController extends BaseController{
 
     @ApiOperation("upload goods pic")
     @PostMapping("/security/pic")
-    public JsonEntity<String> postPic(@RequestBody MultipartFile picFile) {
-        String picUrl = fileService.saveFile(picFile);
+    public JsonEntity<String> postPic(HttpServletRequest request, @RequestBody MultipartFile picFile) {
+        String picUrl = fileService.saveFile(picFile, request);
         return ResponseHelper.of(picUrl);
     }
 
     @ApiOperation("query goods")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type", value = "类型ID，从GoodsType中获取。"),
+            @ApiImplicitParam(name = "goodsName", value = "商品名称，模糊搜索")
+    })
     @GetMapping("/goods")
-    public JsonEntity<List<Goods>> queryGoods(@RequestParam int type, @RequestParam(required = false) String goodsName){
+    public JsonEntity<List<Goods>> queryGoods(@RequestParam int type, @RequestParam(required = false) String goodsName) {
         List<Goods> goodsList = goodsService.query(goodsName, type);
         return ResponseHelper.of(goodsList);
     }
@@ -73,7 +79,6 @@ public class GoodsController extends BaseController{
 
         return ResponseHelper.of(resp);
     }
-
 
 
 }

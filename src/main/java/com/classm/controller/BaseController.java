@@ -2,8 +2,10 @@ package com.classm.controller;
 
 
 import com.classm.bean.User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 public class BaseController {
 
