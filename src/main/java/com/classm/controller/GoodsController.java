@@ -3,18 +3,23 @@ package com.classm.controller;
 
 import com.classm.bean.*;
 import com.classm.bean.resp.QueryGoodsByIdResp;
-import com.classm.service.FileService;
 import com.classm.service.GoodsService;
 import com.classm.service.UserService;
+import com.classm.service.storage.StorageService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping()
@@ -22,9 +27,9 @@ public class GoodsController extends BaseController {
     @Autowired
     private GoodsService goodsService;
     @Autowired
-    private FileService fileService;
-    @Autowired
     private UserService userService;
+    @Autowired
+    private StorageService storageService;
 
     @ApiOperation("post goods")
     @PostMapping("/security/goods")
@@ -37,9 +42,18 @@ public class GoodsController extends BaseController {
 
     @ApiOperation("upload goods pic")
     @PostMapping("/security/pic")
-    public JsonEntity<String> postPic(HttpServletRequest request, @RequestBody MultipartFile picFile) {
-        String picUrl = fileService.saveFile(picFile, request);
-        return ResponseHelper.of(picUrl);
+    public JsonEntity<String> postPic(@RequestBody MultipartFile file) throws IOException {
+        String fileName = UUID.randomUUID().toString();
+        storageService.store(file, fileName);
+        return ResponseHelper.of(fileName);
+    }
+
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     @ApiOperation("query goods")
