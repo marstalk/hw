@@ -23,7 +23,7 @@ public class OrderService {
     private GoodsService goodsService;
 
 
-    public Order placeOrder(Order order, User user) throws ParseException {
+    public Order placeOrder(Order order, int userId) throws ParseException {
 
         String goodsId = order.getGoodsId();
         Goods goods = goodsService.queryById(goodsId);
@@ -39,7 +39,7 @@ public class OrderService {
             throw new BizExceptiton("start day must before end day.");
         }
 
-        order.setUserId(user.getId());
+        order.setUserId(userId);
         order.setTotalFee(calculatetTotalFee(order, goods));
         orderMapper.save(order);
 

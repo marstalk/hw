@@ -25,8 +25,8 @@ public class OrderController extends BaseController{
     @PostMapping("/order")
     public JsonEntity<Order> placeOrder(HttpServletRequest request, @RequestBody Order order) throws ParseException {
 
-        User user = currentUser(request);
-        Order palacedOrder = orderService.placeOrder(order, user);
+        int userId = currentUserId(request);
+        Order palacedOrder = orderService.placeOrder(order, userId);
         return ResponseHelper.of(palacedOrder);
     }
 

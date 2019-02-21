@@ -34,8 +34,8 @@ public class GoodsController extends BaseController {
     @ApiOperation("post goods")
     @PostMapping("/security/goods")
     public JsonEntity<Goods> postGoods(HttpServletRequest request, @RequestBody Goods goods) {
-        User user = currentUser(request);
-        goods.setOwner(user.getId());
+        int userId = currentUserId(request);
+        goods.setOwner(userId);
         Goods resulGoods = goodsService.saveGoods(goods);
         return ResponseHelper.of(resulGoods);
     }

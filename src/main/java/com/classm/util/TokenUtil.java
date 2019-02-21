@@ -16,7 +16,7 @@ public class TokenUtil {
     private static final long EXPIRE_TIME = 15 * 60 * 1000;
     private static final String TOKEN_SECRET = "#%^($*#FHEUHFKJe36482^&";
 
-    public static String sign(String username, String password) {
+    public static String sign(String username, String userId) {
         try {
             // 设置过期时间
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
@@ -30,7 +30,7 @@ public class TokenUtil {
             return JWT.create()
                     .withHeader(header)
                     .withClaim("loginName", username)
-                    .withClaim("pwd", password)
+                    .withClaim("userId", userId)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e) {

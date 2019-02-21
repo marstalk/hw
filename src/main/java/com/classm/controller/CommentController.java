@@ -5,6 +5,7 @@ import com.classm.bean.JsonEntity;
 import com.classm.bean.ResponseHelper;
 import com.classm.bean.User;
 import com.classm.service.CommentService;
+import com.classm.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,17 @@ public class CommentController extends BaseController{
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private UserService userService;
 
     @ApiOperation("post a comment")
     @PostMapping("/security/comment/{goodsId}")
     public JsonEntity<String> postComment(HttpServletRequest request, @PathVariable String goodsId, @RequestBody String commentStr) {
-        User user = currentUser(request);
-
+        int userId = currentUserId(request);
+        User user = userService.findUserById(userId);
+        if (null == user) {
+            return ResponseHelper.of("please login first.");
+        }
         Comment comment = new Comment(user.getId(), user.getFirstName(), goodsId, commentStr);
         commentService.comment(comment);
         return ResponseHelper.of("comment!");

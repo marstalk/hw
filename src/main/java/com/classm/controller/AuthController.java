@@ -1,6 +1,5 @@
 package com.classm.controller;
 
-import com.classm.advice.BizExceptiton;
 import com.classm.bean.JsonEntity;
 import com.classm.bean.ResponseHelper;
 import com.classm.bean.User;
@@ -38,12 +37,16 @@ public class AuthController {
             return ResponseHelper.error(-1, "user do not exist or password is wrong, please try again.");
         }
 
-        //login successfully
-//        request.getSession().setAttribute("user", user);
+        String token = TokenUtil.sign(loginReq.getLoginName(), String.valueOf(user.getId()));
+        LoginResp resp = new LoginResp();
+        resp.setFirstName(user.getFirstName());
+        resp.setLastName(user.getLastName());
+        resp.setUserId(user.getId());
+        resp.setBirth(user.getBirth());
+        resp.setEmail(user.getEmail());
+        resp.setToken(token);
 
-        String sign = TokenUtil.sign(loginReq.getLoginName(), loginReq.getPwd());
-
-        return ResponseHelper.of("login!");
+        return ResponseHelper.of(resp);
     }
 
 
@@ -67,7 +70,7 @@ public class AuthController {
             user.setEmail(loginName);
         } else if (signUpReq.getType().equalsIgnoreCase("phone")) {
             user.setPhone(loginName);
-        }else{
+        } else {
             return ResponseHelper.error(-2, "type should email or phone only");
         }
 
@@ -75,7 +78,7 @@ public class AuthController {
         user.setLastName(signUpReq.getLastName());
         user.setPwd(signUpReq.getPwd());
         user.setBirth(signUpReq.getBirth());
-        user.setNotify(null == signUpReq.getNotify() ? "N": signUpReq.getNotify());
+        user.setNotify(null == signUpReq.getNotify() ? "N" : signUpReq.getNotify());
 
         userService.save(user);
 

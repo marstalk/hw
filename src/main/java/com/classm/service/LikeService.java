@@ -12,11 +12,11 @@ public class LikeService {
     private LikeMapper likeMapper;
 
 
-    public void like(User user, String goodsId) {
-        likeMapper.saveLike(user.getId(), goodsId);
+    public void like(int userId, String goodsId) {
+        likeMapper.saveLike(userId, goodsId);
     }
 
-    public void dislike(User user, String goodsId) {
-        likeMapper.deleteLike(user.getId(), goodsId);
+    public void dislike(int userId, String goodsId) {
+        likeMapper.deleteLike(userId, goodsId);
     }
 }
