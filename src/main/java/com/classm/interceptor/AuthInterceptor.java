@@ -18,7 +18,7 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
-    @Value("auth.switch")
+    @Value("${auth.switch}")
     private String on;
 
     @Override
