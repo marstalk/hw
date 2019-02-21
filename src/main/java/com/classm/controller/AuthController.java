@@ -6,8 +6,10 @@ import com.classm.bean.ResponseHelper;
 import com.classm.bean.User;
 import com.classm.bean.req.LoginReq;
 import com.classm.bean.req.SignUpReq;
+import com.classm.bean.resp.LoginResp;
 import com.classm.service.UserService;
 import com.classm.service.VerifyCodeService;
+import com.classm.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ public class AuthController {
     private VerifyCodeService verifyCodeService;
 
     @PostMapping("/login")
-    public JsonEntity<String> login(@RequestBody LoginReq loginReq, HttpServletRequest request) {
+    public JsonEntity<LoginResp> login(@RequestBody LoginReq loginReq, HttpServletRequest request) {
 
         User user = null;
         if (loginReq.getType().equalsIgnoreCase(User.TYPE_EMAIL)) {
@@ -37,7 +39,9 @@ public class AuthController {
         }
 
         //login successfully
-        request.getSession().setAttribute("user", user);
+//        request.getSession().setAttribute("user", user);
+
+        String sign = TokenUtil.sign(loginReq.getLoginName(), loginReq.getPwd());
 
         return ResponseHelper.of("login!");
     }
