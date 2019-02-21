@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface GoodsMapper {
 
-    @Insert("INSERT INTO `t_goods` (`goods_id`, `name`, `type`, `rentalCost`, `deposit`, `desc`, `addr`) VALUES (#{goodsId}, #{name}, #{type}, #{rentalCost}, #{deposit}, #{desc}, #{addr})")
+    @Insert("INSERT INTO `t_goods` (`goods_id`, `name`, `type`, `rentalCost`, `deposit`, `desc`, `addr`, `owner`) VALUES (#{goodsId}, #{name}, #{type}, #{rentalCost}, #{deposit}, #{desc}, #{addr}, #{owner})")
     int saveGoods(Goods goods);
 
     @Select("select * from t_goods where name like concat('%', #{goodsName}, '%') and type = #{type}")

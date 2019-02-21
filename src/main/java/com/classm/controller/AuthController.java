@@ -25,7 +25,7 @@ public class AuthController {
     private VerifyCodeService verifyCodeService;
 
     @PostMapping("/login")
-    public JsonEntity<LoginResp> login(@RequestBody LoginReq loginReq, HttpServletRequest request) {
+    public JsonEntity<LoginResp> login(@RequestBody LoginReq loginReq, HttpServletResponse response) {
 
         User user = null;
         if (loginReq.getType().equalsIgnoreCase(User.TYPE_EMAIL)) {
@@ -46,15 +46,11 @@ public class AuthController {
         resp.setEmail(user.getEmail());
         resp.setToken(token);
 
+        response.setHeader("hw-token", token);
+
         return ResponseHelper.of(resp);
     }
 
-
-    @DeleteMapping("/logout")
-    public JsonEntity<String> logout(HttpServletRequest request) {
-        request.getSession().removeAttribute("user");
-        return ResponseHelper.of("logout");
-    }
 
     @PostMapping("/sign-up")
     public JsonEntity<String> signUp(HttpServletRequest request, @RequestBody SignUpReq signUpReq) {

@@ -62,7 +62,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                 String loginName = jwt.getClaim("loginName").asString();
                 String userId = jwt.getClaim("userId").asString();
                 String newToken = TokenUtil.sign(loginName, userId);
-                response.setHeader("hw-token", token);
+                response.setHeader("hw-token", newToken);
             } catch (JWTDecodeException e){
                 log.error(e.getMessage(), e);
             }

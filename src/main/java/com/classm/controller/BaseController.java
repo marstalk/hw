@@ -18,7 +18,8 @@ public class BaseController {
         String token = request.getHeader("hw-token");
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("userId").asInt();
+            String userId = jwt.getClaim("userId").asString();
+            return Integer.parseInt(userId);
         } catch (JWTDecodeException e){
             log.error(e.getMessage(), e);
             return -1;
