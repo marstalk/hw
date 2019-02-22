@@ -29,6 +29,9 @@ public class Goods {
     @ApiModelProperty(required = true)
     private int type;
 
+    @ApiModelProperty(hidden = true)
+    private String typeName;
+
     @ApiModelProperty(required = true)
     private BigDecimal rentalCost;
 

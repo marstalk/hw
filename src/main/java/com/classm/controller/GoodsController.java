@@ -3,12 +3,14 @@ package com.classm.controller;
 
 import com.classm.bean.*;
 import com.classm.bean.resp.QueryGoodsByIdResp;
+import com.classm.bean.resp.QueryGoodsResp;
 import com.classm.service.GoodsService;
 import com.classm.service.UserService;
 import com.classm.service.storage.StorageService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -62,9 +64,13 @@ public class GoodsController extends BaseController {
             @ApiImplicitParam(name = "goodsName", value = "商品名称，模糊搜索")
     })
     @GetMapping("/goods")
-    public JsonEntity<List<Goods>> queryGoods(@RequestParam int type, @RequestParam(required = false) String goodsName) {
-        List<Goods> goodsList = goodsService.query(goodsName, type);
-        return ResponseHelper.of(goodsList);
+    public JsonEntity<QueryGoodsResp> queryGoods(@RequestParam(required = false, defaultValue = "0") int type,
+                                                 @RequestParam(required = false) String goodsName,
+                                                 @RequestParam(required = false, defaultValue = "1") int pageNo,
+                                                 @RequestParam(required = false, defaultValue = "20") int pageSize) {
+        QueryGoodsResp resp = goodsService.query(goodsName, type, pageNo, pageSize);
+
+        return ResponseHelper.of(resp);
     }
 
     @ApiOperation("query all goods type")

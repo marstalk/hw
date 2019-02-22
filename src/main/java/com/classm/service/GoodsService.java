@@ -1,6 +1,10 @@
 package com.classm.service;
 
-import com.classm.bean.*;
+import com.classm.bean.Goods;
+import com.classm.bean.GoodsType;
+import com.classm.bean.GoodsUrl;
+import com.classm.bean.UserBasic;
+import com.classm.bean.resp.QueryGoodsResp;
 import com.classm.dao.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +33,8 @@ public class GoodsService {
     public Goods saveGoods(Goods goods) {
 
         goods.setGoodsId(UUID.randomUUID().toString());
+        GoodsType goodsType = goodsTypeMapper.queryById(goods.getType());
+        goods.setTypeName(goodsType == null ? "" : goodsType.getName());
         goodsMapper.saveGoods(goods);
 
         if (!CollectionUtils.isEmpty(goods.getPicUrls())) {
@@ -47,10 +53,13 @@ public class GoodsService {
         return goodsTypeMapper.queryAll();
     }
 
-    public List<Goods> query(String goodsName, int type) {
-        List<Goods> goodsList = goodsMapper.query(goodsName, type);
+    public QueryGoodsResp query(String goodsName, int type, int pageNo, int pageSize) {
+        List<Goods> goodsList = goodsMapper.query(goodsName, type, pageNo * pageSize - pageSize, pageSize);
         fillUrl(goodsList);
-        return goodsList;
+
+        long count = goodsMapper.countGoods(goodsName, type);
+        QueryGoodsResp resp = new QueryGoodsResp(goodsList, count, pageNo, pageSize);
+        return resp;
     }
 
     private void fillUrl(List<Goods> goodsList) {
