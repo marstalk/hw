@@ -18,8 +18,8 @@ public class Order {
     private String goodsId;
 
 
-    @ApiModelProperty(required = true)
-    private int payType;
+    @ApiModelProperty(required = true, allowableValues = "{visa, mastercard, amex}")
+    private String payType;
 
     @ApiModelProperty(required = true, value = "rental start date, yyyy-MM-dd", example = "2018-9-1")
     private String rentStart;

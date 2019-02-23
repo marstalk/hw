@@ -35,8 +35,8 @@ public class OrderService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         order.setRentStartDay(sdf.parse(order.getRentStart()));
         order.setRentEndDay(sdf.parse(order.getRentEnd()));
-        if (!order.getRentStartDay().before(order.getRentEndDay())) {
-            throw new BizExceptiton("start day must before end day.");
+        if (order.getRentStartDay().after(order.getRentEndDay())) {
+            throw new BizExceptiton("start day can't after end day.");
         }
 
         order.setUserId(userId);
@@ -57,8 +57,8 @@ public class OrderService {
     private BigDecimal calculatetTotalFee(Order order, Goods goods) {
 
         int i = differentDaysByMillisecond(order.getRentStartDay(), order.getRentEndDay());
-        if (i < 1) {
-            throw new BizExceptiton("start day must before end day.");
+        if (i < 0) {
+            throw new BizExceptiton("start day can't after end day.");
         }
 
         BigDecimal totalFee = (new BigDecimal(i).multiply(order.getDailyFee())).add(order.getServiceFee()).add(goods.getDeposit());
