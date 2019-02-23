@@ -174,12 +174,18 @@ CREATE TABLE `t_order` (
   `daily_fee` float(11,2) NOT NULL COMMENT '商品日租金',
   `service_fee` float(11,2) DEFAULT '0.00' COMMENT '服务费',
   `total_fee` float(11,2) NOT NULL COMMENT '总费用',
-  `pay_type` int(11) NOT NULL COMMENT '支付类型',
+  `pay_type` varchar(90) NOT NULL COMMENT '支付类型',
   `pay_status` int(11) NOT NULL DEFAULT '0' COMMENT '支付状态0: unpay; 1:paying; 99: paied',
   `audit_status` int(11) NOT NULL DEFAULT '0' COMMENT '审核状态：0:unaudit; 99: audited',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_id` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order
+-- ----------------------------
+INSERT INTO `t_order` VALUES ('1', 'hw-1550912137381-cd132615', '2', '6fbd4167-5f36-4baa-9e84-6cd89dcfad41', '2018-08-31', '2018-09-04', '888.00', '0.00', '5328.00', 'visa', '0', '0');
+INSERT INTO `t_order` VALUES ('2', 'hw-1550912718710-86796824', '2', 'e3a1992e-ed60-4014-b4a6-bd34bcc9ad44', '2019-02-23', '2019-02-24', '2000.00', '0.00', '6000.00', 'visa', '0', '0');
 
 -- ----------------------------
 -- Records of t_order
