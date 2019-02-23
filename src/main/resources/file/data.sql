@@ -186,10 +186,10 @@ CREATE TABLE `t_order` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_user`
+-- Table structure for `t_end_user`
 -- ----------------------------
-DROP TABLE IF EXISTS `t_user`;
-CREATE TABLE `t_user` (
+DROP TABLE IF EXISTS `t_end_user`;
+CREATE TABLE `t_end_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `type` varchar(45) DEFAULT NULL COMMENT '用户注册类型',
   `phone` varchar(45) DEFAULT NULL COMMENT '手机',
@@ -207,8 +207,8 @@ CREATE TABLE `t_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_user
+-- Records of t_end_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'email', '12345678', 'test@test.com', 'M', 'Bill', 'Gates', '1965-2-2', 'Y', 'qwe');
-INSERT INTO `t_user` VALUES ('2', 'phone', '123456', 'jia@qq.com', 'F', 'Steven', 'Jobs', '1998-4-12', 'N', 'qweasd');
-INSERT INTO `t_user` VALUES ('3', 'email', null, 'zds@qq.com', null, 'zhong', 'dongsheng', '1989-9-10', 'N', 'pwd');
+INSERT INTO `t_end_user` VALUES ('1', 'email', '12345678', 'test@test.com', 'M', 'Bill', 'Gates', '1965-2-2', 'Y', 'qwe');
+INSERT INTO `t_end_user` VALUES ('2', 'phone', '123456', 'jia@qq.com', 'F', 'Steven', 'Jobs', '1998-4-12', 'N', 'qweasd');
+INSERT INTO `t_end_user` VALUES ('3', 'email', null, 'zds@qq.com', null, 'zhong', 'dongsheng', '1989-9-10', 'N', 'pwd');

@@ -12,38 +12,38 @@ import java.util.List;
 public interface UserMapper {
 
 
-    @Select("select * from t_user")
+    @Select("select * from t_end_user")
     List<User> getAll();
 
-    @Select("select * from t_user where email = #{email}")
+    @Select("select * from t_end_user where email = #{email}")
     @Results({
             @Result(column = "first_name", property = "firstName"),
             @Result(column = "last_name", property = "lastName")
     })
     User findUserByEmail(String email);
 
-    @Select("select * from t_user where phone = #{phone}")
+    @Select("select * from t_end_user where phone = #{phone}")
     @Results({
             @Result(column = "first_name", property = "firstName"),
             @Result(column = "last_name", property = "lastName")
     })
     User findUserByPhone(String phone);
 
-    @Select("select * from t_user where id = #{id}")
+    @Select("select * from t_end_user where id = #{id}")
     @Results({
             @Result(column = "first_name", property = "firstName"),
             @Result(column = "last_name", property = "lastName")
     })
     User findUserById(int id);
 
-    @Select("<script>select id, first_name, last_name from t_user where id in <foreach item='id' collection='ids' open='(' separator=',' close=')'> #{id}</foreach> </script>")
+    @Select("<script>select id, first_name, last_name from t_end_user where id in <foreach item='id' collection='ids' open='(' separator=',' close=')'> #{id}</foreach> </script>")
     @Results({
             @Result(column = "first_name", property = "firstName"),
             @Result(column = "last_name", property = "lastName")
     })
     List<UserBasic> findUsersByIds(@Param("ids") List<Integer> userByGoodsId);
 
-    @Insert("INSERT INTO `t_user` (`type`, `phone`, `email`, `gender`, `first_name`, `last_name`, `birth`, `notify`, `pwd`) " +
+    @Insert("INSERT INTO `t_end_user` (`type`, `phone`, `email`, `gender`, `first_name`, `last_name`, `birth`, `notify`, `pwd`) " +
             "VALUES (#{user.type}, #{user.phone}, #{user.email}, #{user.gender}, #{user.firstName}, #{user.lastName}, #{user.birth}, #{user.notify}, #{user.pwd});")
     int save(@Param("user") User user);
 
