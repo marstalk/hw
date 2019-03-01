@@ -1,16 +1,12 @@
 package com.classm.filter;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 public class CorsFilter implements Filter {
 
-    @Value("${cross-origin.switch}")
-    private String on;
+    private String on = "1";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -19,7 +15,7 @@ public class CorsFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        if (null != on && on.equals("1")){
+        if (null != on && on.equals("1")) {
             HttpServletResponse response = (HttpServletResponse) res;
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
