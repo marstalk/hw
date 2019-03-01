@@ -55,7 +55,7 @@ public class AuthController {
     @PostMapping("/sign-up")
     public JsonEntity<String> signUp(HttpServletRequest request, @RequestBody SignUpReq signUpReq) {
         String verifyCode = (String) request.getSession().getAttribute("verifyCode");
-        if (!verifyCode.equalsIgnoreCase(signUpReq.getVerifyCode())) {
+        if (null == verifyCode || !verifyCode.equalsIgnoreCase(signUpReq.getVerifyCode())) {
             return ResponseHelper.error(-1, "verify code error");
         }
 
